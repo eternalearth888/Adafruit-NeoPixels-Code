@@ -35,15 +35,19 @@ void loop() {
   for (uint16_t i = 0; i < strip.numPixels(); i++) { //iterate through all the LEDs in the neopixel strip
     Serial.print("i: ");
     Serial.println(i);
-    if (led_count == 0) {
-       // when led_count is only equal to 0, turn off all the lights
-       strip.setPixelColor(i, 0, 0, 0); 
-    } else if (i == led_count) {
+    if (i == led_count) {
         // when i and the led_count match make it pink
         strip.setPixelColor(i,R,G,B);
+        if (a0_val < 50) {
+          // if a0_val is less than 50 , which means it is getting no input
+          strip.setPixelColor(i,0,0,0);
+        }
     } else if (i < led_count) {
       // if i am on 2, color leds 1 and 0 green
       strip.setPixelColor(i,0,255,0);
+    } else {
+      // turn them off otherwise
+      strip.setPixelColor(i,0,0,0);
     }
   }
   strip.show(); //update the strip colors
